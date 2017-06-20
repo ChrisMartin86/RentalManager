@@ -8,9 +8,10 @@ using RentalDataWarehouse.Data;
 namespace RentalDataWarehouse.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170620170124_rentalItems_PurchaseItems_RentalInfo_PurchaseInfo-Customer_ApplicationUser")]
+    partial class rentalItems_PurchaseItems_RentalInfo_PurchaseInfoCustomer_ApplicationUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.2")

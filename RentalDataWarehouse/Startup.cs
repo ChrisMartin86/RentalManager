@@ -83,6 +83,15 @@ namespace RentalDataWarehouse
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            var connectionStrings = new Dictionary<string, string>();
+                connectionStrings.Add("DefaultConnection", Configuration.GetConnectionString("DefaultConnection"));
+
+            var appSettings = new Dictionary<string, string>();
+                appSettings.Add("TMDbv3Key", Configuration.GetSection("AppSettings")["IMDbv3Key"]);
+                appSettings.Add("TMDbv4Key", Configuration.GetSection("AppSettings")["TMDbv4Key"]);
+
+            ConfigurationData.Populate(connectionStrings, appSettings);
         }
     }
 }

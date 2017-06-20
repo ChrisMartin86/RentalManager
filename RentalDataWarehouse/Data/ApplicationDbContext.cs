@@ -10,6 +10,14 @@ namespace RentalDataWarehouse.Data
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<Customer> Customers { get; set; }
+        public DbSet<RentalItem> RentalItems { get; set; }
+        public DbSet<PurchaseItem> PurchaseItems { get; set; }
+        public DbSet<RentalInfo> RentalItemInfo { get; set; }
+        public DbSet<PurchaseInfo> PurchaseItemInfo { get; set; }
+
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {

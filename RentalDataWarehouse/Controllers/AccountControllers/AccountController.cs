@@ -12,6 +12,7 @@ using Microsoft.Extensions.Options;
 using RentalDataWarehouse.Models;
 using RentalDataWarehouse.Models.AccountViewModels;
 using RentalDataWarehouse.Services;
+using RentalDataWarehouse.Data;
 
 namespace RentalDataWarehouse.Controllers
 {
@@ -20,6 +21,7 @@ namespace RentalDataWarehouse.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly ApplicationDbContext _applicationDbContext;
         private readonly IEmailSender _emailSender;
         private readonly ISmsSender _smsSender;
         private readonly ILogger _logger;
@@ -28,6 +30,7 @@ namespace RentalDataWarehouse.Controllers
         public AccountController(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
+            ApplicationDbContext applicationDbContext,
             IOptions<IdentityCookieOptions> identityCookieOptions,
             IEmailSender emailSender,
             ISmsSender smsSender,
@@ -35,10 +38,28 @@ namespace RentalDataWarehouse.Controllers
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _applicationDbContext = applicationDbContext;
             _externalCookieScheme = identityCookieOptions.Value.ExternalCookieAuthenticationScheme;
             _emailSender = emailSender;
             _smsSender = smsSender;
             _logger = loggerFactory.CreateLogger<AccountController>();
+        }
+
+        private async Task<Guid> newCustomer(ApplicationDbContext applicationDbContext, ApplicationUser applicationUser)
+        {
+            Guid _id = Guid.NewGuid();
+
+            var customer = new Customer
+            {
+                Id = _id,
+                EmailAddress = applicationUser.Email,
+                Name = applicationUser.Name
+            };
+
+            applicationDbContext.Add(customer);
+            await applicationDbContext.SaveChangesAsync();
+
+            return _id;
         }
 
         //
@@ -113,6 +134,19 @@ namespace RentalDataWarehouse.Controllers
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+
+                Customer customerInfo;
+
+                if (!Customer.tryFind(model.Email, _applicationDbContext, out customerInfo))
+                {
+                    Guid customerId = await newCustomer(_applicationDbContext, user);
+                    user.CustomerId = customerId;
+                }
+                else
+                {
+                    user.CustomerId = customerInfo.Id;
+                }
+
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {

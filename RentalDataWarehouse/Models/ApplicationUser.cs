@@ -9,5 +9,7 @@ namespace RentalDataWarehouse.Models
     // Add profile data for application users by adding properties to the ApplicationUser class
     public class ApplicationUser : IdentityUser
     {
+        public Guid CustomerId { get; set; }
+        public string Name { get; set; }
     }
 }

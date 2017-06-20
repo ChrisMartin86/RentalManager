@@ -8,9 +8,10 @@ using RentalDataWarehouse.Data;
 namespace RentalDataWarehouse.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170620163632_orders_Customers_RentalItems_PurchaseItems_Initial")]
+    partial class orders_Customers_RentalItems_PurchaseItems_Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.2")
@@ -144,8 +145,6 @@ namespace RentalDataWarehouse.Data.Migrations
 
                     b.Property<DateTimeOffset?>("LockoutEnd");
 
-                    b.Property<string>("Name");
-
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256);
 
@@ -182,10 +181,6 @@ namespace RentalDataWarehouse.Data.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("EmailAddress");
-
-                    b.Property<string>("Name");
-
                     b.HasKey("Id");
 
                     b.ToTable("Customers");
@@ -205,52 +200,22 @@ namespace RentalDataWarehouse.Data.Migrations
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("RentalDataWarehouse.Models.PurchaseInfo", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("ExternalId");
-
-                    b.Property<string>("Name");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("PurchaseInfo");
-                });
-
             modelBuilder.Entity("RentalDataWarehouse.Models.PurchaseItem", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<Guid?>("ItemInformationId");
+                    b.Property<string>("ExternalId");
+
+                    b.Property<string>("Name");
 
                     b.Property<Guid?>("OrderId");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ItemInformationId");
-
                     b.HasIndex("OrderId");
 
                     b.ToTable("PurchaseItems");
-                });
-
-            modelBuilder.Entity("RentalDataWarehouse.Models.RentalInfo", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("ExternalId");
-
-                    b.Property<string>("Name");
-
-                    b.Property<int>("TotalCopies");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("RentalInfo");
                 });
 
             modelBuilder.Entity("RentalDataWarehouse.Models.RentalItem", b =>
@@ -258,13 +223,13 @@ namespace RentalDataWarehouse.Data.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<Guid?>("ItemInformationId");
+                    b.Property<string>("ExternalId");
+
+                    b.Property<string>("Name");
 
                     b.Property<Guid?>("OrderId");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ItemInformationId");
 
                     b.HasIndex("OrderId");
 
@@ -317,10 +282,6 @@ namespace RentalDataWarehouse.Data.Migrations
 
             modelBuilder.Entity("RentalDataWarehouse.Models.PurchaseItem", b =>
                 {
-                    b.HasOne("RentalDataWarehouse.Models.PurchaseInfo", "ItemInformation")
-                        .WithMany()
-                        .HasForeignKey("ItemInformationId");
-
                     b.HasOne("RentalDataWarehouse.Models.Order")
                         .WithMany("Purchases")
                         .HasForeignKey("OrderId");
@@ -328,10 +289,6 @@ namespace RentalDataWarehouse.Data.Migrations
 
             modelBuilder.Entity("RentalDataWarehouse.Models.RentalItem", b =>
                 {
-                    b.HasOne("RentalDataWarehouse.Models.RentalInfo", "ItemInformation")
-                        .WithMany()
-                        .HasForeignKey("ItemInformationId");
-
                     b.HasOne("RentalDataWarehouse.Models.Order")
                         .WithMany("Rentals")
                         .HasForeignKey("OrderId");
