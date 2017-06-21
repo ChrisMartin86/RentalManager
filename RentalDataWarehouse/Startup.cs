@@ -84,14 +84,46 @@ namespace RentalDataWarehouse
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
 
+            populateConfigurationData();
+        }
+
+        private void populateConfigurationData()
+        {
+            Dictionary<string, string> connectionStrings = createConnectionStringDictionary();
+            Dictionary<string, string> appSettings = createAppSettingsDictionary();
+            Dictionary<string, string> businessInfo = createBusinessInfoDictionary();
+
+            ConfigurationData.Populate(connectionStrings, appSettings, businessInfo);
+        }
+
+        private Dictionary<string, string> createConnectionStringDictionary()
+        {
             var connectionStrings = new Dictionary<string, string>();
                 connectionStrings.Add("DefaultConnection", Configuration.GetConnectionString("DefaultConnection"));
 
+            return connectionStrings;
+        }
+
+        private Dictionary<string, string> createAppSettingsDictionary()
+        {
             var appSettings = new Dictionary<string, string>();
                 appSettings.Add("TMDbv3Key", Configuration.GetSection("AppSettings")["IMDbv3Key"]);
                 appSettings.Add("TMDbv4Key", Configuration.GetSection("AppSettings")["TMDbv4Key"]);
 
-            ConfigurationData.Populate(connectionStrings, appSettings);
+            return appSettings;
+        }
+
+        private Dictionary<string, string> createBusinessInfoDictionary()
+        {
+            var businessInfo = new Dictionary<string, string>();
+                businessInfo.Add("Name", Configuration.GetSection("BusinessInfo")["Name"]);
+                businessInfo.Add("About", Configuration.GetSection("BusinessInfo")["About"]);
+                businessInfo.Add("Address", Configuration.GetSection("BusinessInfo")["Address"]);
+                businessInfo.Add("Phone", Configuration.GetSection("BusinessInfo")["Phone"]);
+                businessInfo.Add("SupportEmail", Configuration.GetSection("BusinessInfo")["SupportEmail"]);
+                businessInfo.Add("PrimaryEmail", Configuration.GetSection("BusinessInfo")["PrimaryEmail"]);
+
+            return businessInfo;
         }
     }
 }

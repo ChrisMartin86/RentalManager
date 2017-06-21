@@ -5,10 +5,9 @@ using System.Threading.Tasks;
 
 namespace RentalDataWarehouse.Models
 {
-    public class RentalItem
+    public class CustomerTier
     {
         public Guid Id { get; set; }
-        public RentalInfo ItemInformation { get; set; }
-
+        public string Name { get; set; }
     }
 }

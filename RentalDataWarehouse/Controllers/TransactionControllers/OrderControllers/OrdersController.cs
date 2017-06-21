@@ -57,7 +57,7 @@ namespace RentalDataWarehouse.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("RentalItems", "PurchaseItems", "PickupDateTime")] NewOrderModel order)
+        public async Task<IActionResult> Create([Bind("RentalItems", "PurchaseItems", "PickupDateTime")] SendOrderModel order)
         {
             ApplicationUser user = await _userManager.FindByNameAsync(User.Identity.Name);
 

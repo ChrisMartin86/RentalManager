@@ -11,6 +11,7 @@ namespace RentalDataWarehouse.Models
         public Guid Id { get; set; }
         public string Name { get; set; }
         public string EmailAddress { get; set; }
+        public CustomerTier Tier { get; set; }
         public IEnumerable<Order> Orders { get; set; }
 
         internal static bool tryFind(string emailAddress, ApplicationDbContext applicationDbContext, out Customer customer)

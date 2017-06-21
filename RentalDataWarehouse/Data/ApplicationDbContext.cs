@@ -16,6 +16,8 @@ namespace RentalDataWarehouse.Data
         public DbSet<PurchaseItem> PurchaseItems { get; set; }
         public DbSet<RentalInfo> RentalItemInfo { get; set; }
         public DbSet<PurchaseInfo> PurchaseItemInfo { get; set; }
+        public DbSet<CustomerTier> CustomerTier { get; set; }
+        public DbSet<Cart> Carts { get; set; }
 
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
@@ -30,5 +32,7 @@ namespace RentalDataWarehouse.Data
             // For example, you can rename the ASP.NET Identity table names and more.
             // Add your customizations after calling base.OnModelCreating(builder);
         }
+
+        
     }
 }
