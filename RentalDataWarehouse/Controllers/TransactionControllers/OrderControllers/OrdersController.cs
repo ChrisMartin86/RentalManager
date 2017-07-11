@@ -77,31 +77,6 @@ namespace RentalDataWarehouse.Controllers
                 _order.Id = Guid.NewGuid();
                 _order.Customer = customerResults.ToArray()[0];
 
-                foreach (Guid item in order.RentalItems)
-                {
-                    var rentalItem = new RentalItem
-                    {
-                        Id = Guid.NewGuid(),
-                        ItemInformation = _context.RentalItemInfo.Where(i => i.Id == item).ToArray()[0]
-                    };
-
-                    _context.Add(rentalItem);
-                    _order.Rentals.Add(rentalItem);
-                }
-
-                foreach (Guid item in order.PurchaseItems)
-                {
-                    var purchaseItem = new PurchaseItem
-                    {
-                        Id = Guid.NewGuid(),
-                        ItemInformation = _context.PurchaseItemInfo.Where(i => i.Id == item).ToArray()[0]
-                    };
-
-                    _context.Add(purchaseItem);
-                    _order.Purchases.Add(purchaseItem);
-                }
-
-
                 _context.Add(_order);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index");

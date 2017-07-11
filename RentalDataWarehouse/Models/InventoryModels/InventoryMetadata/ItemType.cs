@@ -5,9 +5,10 @@ using System.Threading.Tasks;
 
 namespace RentalDataWarehouse.Models
 {
-    public class PurchaseItem
+    public enum ItemType
     {
-        public Guid Id { get; set; }
-        public PurchaseInfo ItemInformation { get; set; }
+        Rental = 0,
+        Purchase = 1,
+        Room = 2
     }
 }

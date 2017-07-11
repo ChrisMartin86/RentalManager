@@ -9,8 +9,6 @@ namespace RentalDataWarehouse.Models
     {
         public Guid Id { get; set; }
         public Customer Customer { get; set; }
-        public List<RentalItem> Rentals { get; set; }
-        public List<PurchaseItem> Purchases { get; set; }
         public bool TransactionComplete { get; set; }
         public DateTime? DateTimeOfTransaction { get; set; }
         public decimal? Total { get; set; }

@@ -12,12 +12,10 @@ namespace RentalDataWarehouse.Data
     {
         public DbSet<Order> Orders { get; set; }
         public DbSet<Customer> Customers { get; set; }
-        public DbSet<RentalItem> RentalItems { get; set; }
-        public DbSet<PurchaseItem> PurchaseItems { get; set; }
-        public DbSet<RentalInfo> RentalItemInfo { get; set; }
-        public DbSet<PurchaseInfo> PurchaseItemInfo { get; set; }
         public DbSet<CustomerTier> CustomerTier { get; set; }
         public DbSet<Cart> Carts { get; set; }
+        public DbSet<CartItem> CartItems { get; set; }
+        public DbSet<ItemInfo> ItemInfo { get; set; }
 
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)

@@ -5,11 +5,10 @@ using System.Threading.Tasks;
 
 namespace RentalDataWarehouse.Models
 {
-    public class RentalInfo
+    public class CartItem
     {
         public Guid Id { get; set; }
-        public string Name { get; set; }
-        public int TotalCopies { get; set; }
-        public string ExternalId { get; set; }
+        public Cart Cart { get; set; }
+        public ItemInfo ItemInfo { get; set; }
     }
 }
